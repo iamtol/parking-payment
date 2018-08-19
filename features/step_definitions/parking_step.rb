@@ -34,38 +34,26 @@ Given("I got parking ticket at time {string}") do |startTime|
     @cost = Cost.new
 end
   
-  When("I return parking at {string}") do |endTime|
+When("I return parking at {string}") do |endTime|
     # @endTime = Time.at(endTime).utc.strftime("%H:%M:%S")
     @endTime = endTime
     @actual = @cost.diff @startTime, @endTime
 end
   
-  Then("I pay parking {int} baht") do |cost|
+Then("I pay parking {int} baht") do |cost|
     expect(@actual).to eq cost
 end
 
-# Given("I got {int}") do |hour|
-#     @hour = hour
-#     @cost = Cost.new 
-# end
+Then("Show parking Time {string} hour") do |diffTime|
+    @diffTime = (Time.parse(@endTime) - Time.parse(@startTime)) /3600
+    @hour = (@diffTime.to_i)
+    @min = (@diffTime * 60) % 60
+    @sec = (@diffTime * 3600) % 60
+    # puts Time.parse(diffTime).sec
+    # puts @sec.round(0).to_s.rjust(2, '0')
+    @expectTime = @hour.to_s.rjust(2, '0') + ":" + @min.round(0).to_s.rjust(2, '0') + ":" + @sec.round(0).to_s.rjust(2, '0')
 
-#   When("I count with parking") do
-#     @actual = @cost.count @hour
-# end
-  
-#   Then("I should get {int}") do |expected|
-#     expect(@actual).to eq expected
-# end
+    # @expectTime = (Time.parse(@endTime) - Time.parse(@startTime)) / 3600
 
-# # Given("I got {int}") do |input|
-# #     @input = input
-# #     @fizzbuzz = Fizzbuzz.new
-# #   end
-  
-# #   When("I count with fizzbuzz") do
-# #      @actual = @fizzbuzz.count @input
-# #   end
-  
-# #   Then("I should get {string}") do |expected|
-# #     expect(@actual).to eq expected
-# #   end
+    expect(@expectTime).to eq diffTime
+end
