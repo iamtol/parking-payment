@@ -9,7 +9,13 @@ class Cost
         if diffTime > 1 && diffTime <= 2
             return 50
         end
-        diffTime
+        if diffTime > 2 && diffTime <= 3
+            return 50
+        end
+        if diffTime > 3 && diffTime <= 4
+            return 50
+        end
+        
     end
 end
 
@@ -23,8 +29,8 @@ end
     @actual = @cost.diff @startTime, @endTime
 end
   
-  Then("I pay parking cost {int} baht") do |expected|
-    expect(@actual).to eq expected
+  Then("I pay parking {int} baht") do |cost|
+    expect(@actual).to eq cost
 end
 
 # Given("I got {int}") do |hour|
