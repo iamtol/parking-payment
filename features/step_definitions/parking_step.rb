@@ -1,40 +1,54 @@
+require 'time'
+
 class Cost
-    def count(hour)
-        if hour <= 1
-           return 25
+    def diff(startTime, endTime)
+        diffTime = Time.parse(endTime) - Time.parse(startTime)
+        if diffTime <= 1
+            return 25
         end
-        if hour > 1 && hour <=2
+        if diffTime > 1 && diffTime <= 2
             return 50
         end
-        if hour > 2 && hour <= 3
-            return  80
-        end
-        110
+        diffTime
     end
 end
 
-Given("I got {int}") do |hour|
-    @hour = hour
-    @cost = Cost.new 
-end
-
-  When("I count with parking") do
-    @actual = @cost.count @hour
+Given("I got parking ticket at time {string}") do |startTime|
+    @startTime = Time.at(startTime.to_i).utc.strftime("%H:%M:%S")
+    @cost = Cost.new
 end
   
-  Then("I should get {int}") do |expected|
+  When("I return parking at {string}") do |endTime|
+    @endTime = Time.at(endTime.to_i).utc.strftime("%H:%M:%S")
+    @actual = @cost.diff @startTime, @endTime
+end
+  
+  Then("I pay parking cost {int} baht") do |expected|
     expect(@actual).to eq expected
 end
 
-# Given("I got {int}") do |input|
-#     @input = input
-#     @fizzbuzz = Fizzbuzz.new
-#   end
+# Given("I got {int}") do |hour|
+#     @hour = hour
+#     @cost = Cost.new 
+# end
+
+#   When("I count with parking") do
+#     @actual = @cost.count @hour
+# end
   
-#   When("I count with fizzbuzz") do
-#      @actual = @fizzbuzz.count @input
-#   end
-  
-#   Then("I should get {string}") do |expected|
+#   Then("I should get {int}") do |expected|
 #     expect(@actual).to eq expected
-#   end
+# end
+
+# # Given("I got {int}") do |input|
+# #     @input = input
+# #     @fizzbuzz = Fizzbuzz.new
+# #   end
+  
+# #   When("I count with fizzbuzz") do
+# #      @actual = @fizzbuzz.count @input
+# #   end
+  
+# #   Then("I should get {string}") do |expected|
+# #     expect(@actual).to eq expected
+# #   end

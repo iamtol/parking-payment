@@ -9,23 +9,12 @@ Feature: parking payment system
     #     |hour|expected|
     #     |    0|  25|
     #     |    1|  25|
-Scenario: ชั่วโมงที่ 0
-    Given I got 0
-    When I count with parking
-    Then I should get 25
-Scenario: ชั่วโมงที่ 1
-    Given I got 1
-    When I count with parking
-    Then I should get 25
+
+Scenario: ชั่วโมงที่ 0-1
+    Given I got parking ticket at time "8:00:00"
+    When I return parking at "9:00:00"
+    Then I pay parking cost 25 baht
 Scenario: ชั่วโมงที่ 2
-    Given I got 2
-    When I count with parking
-    Then I should get 50
-Scenario: ชั่วโมงที่ 3
-    Given I got 3
-    When I count with parking
-    Then I should get 80
-Scenario: ชั่วโมงที่ 4
-    Given I got 4
-    When I count with parking
-    Then I should get 110
+    Given I got parking ticket at time "8:00:00"
+    When I return parking at "10:00:00"
+    Then I pay parking cost 50 baht
